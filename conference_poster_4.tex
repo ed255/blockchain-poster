@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[portrait,a0paper,fontscale=0.285]{baposter} % Adjust the font scale/size here
+\documentclass[portrait,a0paper,fontscale=0.305]{baposter} % Adjust the font scale/size here
 
 \usepackage{graphicx} % Required for including images
 \graphicspath{{figures/}} % Directory in which figures are stored
@@ -125,32 +125,38 @@ throughput to increase significantly.
 %\headerbox{Background}{name=results2,column=1,below=objectives,bottomaligned=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
 \headerbox{Background}{name=background,column=2,span=1,row=0}{
 
-Donec faucibus purus at tortor egestas eu fermentum dolor facilisis. Maecenas tempor dui eu neque fringilla rutrum. Mauris \emph{lobortis} nisl accumsan.
+All existing blockchain protocols have a serious limitation: scalability. It is impossible to scale popular consensus systems such as Bitcoin because every single node on the network processes every transaction and maintains a copy of the entire state. The benefits of decentralization automatically imply that every node is independent and has equal processing requirements.
 
-Bitcoin, Ethereum, other cryptocurrencies not scalable.  Scalable approaches are bla bla bla, and have reached this throughput bla bla.  Widely used payment systems like Visa and Paypal have higher throughput bla bla.
+\vspace{0.5em}
+If we were talking about regular database system - the solution would be very easy. We could just add more servers - the number of servers is in direct ratio with the how system can scale. Adding more computing power may also help but in the decentralized world this means adding more computing power to every node. We cannot force every participant to do so.
 
-Nulla ut porttitor enim. Suspendisse venenatis dui eget eros gravida tempor. Mauris feugiat elit et augue placerat ultrices. Morbi accumsan enim nec tortor consectetur non commodo.
+\vspace{0.5em}
+In fact, the blockchain actually gets weaker as more nodes are added to its network because of the inter-node latency that logarithmically increases with every additional node. Moreover, requirements for the node increase, and at some point risk of centralization appears (only some part of nodes are able to process the transaction). We end up with the tradeoff between throughput and decentralization, leading to low throughput in cryptocurrencies.
 
+\vspace{0.5em}
+However this is definitely not enough to meet the needs of fiat currency. Nowadays, Paypal processes 193 transactions per second and Visa does ~2000 (however Visa is capable to process 24000 transactions per second). The majority of all transactions are local transaction (people use fiat currency locally many time more often than sending it abroad / another state / another city). This fact pushed us to the idea of scaling blockchain by leveled zones.
+
+\vspace{-1.5em}
 \begin{center}
-\begin{tabular}{l l}
-\toprule
-\textbf{Payment system} & \textbf{transactions per second} \\
+\begin{tabular}{l l | l l}
+\textbf{System} & \textbf{tx/sec} & \textbf{System} & \textbf{tx/sec} \\
 \midrule
-Ethereum & 20 \\
-Bitcoin & 3-4 \\
-Visa & 24,000 \\
-Paypal &  193 \\
-\bottomrule
+Bitcoin & 3-4 &        Paypal &  193 \\
+Ethereum & 20 &        Visa & 2,000 \\
+Bitcoin Cash & 60 &          &       \\
+
+
 \end{tabular}
-\captionof{table}{Table caption}
+%\captionof{table}{Table caption}
 \end{center}
+
 }
 
 %----------------------------------------------------------------------------------------
 %	MAIN
 %----------------------------------------------------------------------------------------
 
-\headerbox{Scaling with leveled zones}{name=main,column=0,span=2,row=1,below=introduction,above=bottom}{
+\headerbox{Scaling with leveled zones}{name=main,column=0,span=2,row=1,below=introduction}{
 
 \begin{multicols}{2}
 \vspace{1em}
@@ -189,7 +195,7 @@ Intervals:
     \item City (-3): 10 seconds
 \end{itemize}
 
-When user 1 (from city A)  sends a cross-city transaction to user 2 (from city B) this transaction is being added to the city A fork as a special  “hold” transaction. Basically, user 1 cannot double-spend this money, however user 2 will not receive them until city-merge will happen.
+When user 1 (from city A)  sends a cross-city transaction to user 2 (from city B) this transaction is being added to the city A fork as a special "hold" transaction. Basically, user 1 cannot double-spend this money, however user 2 will not receive them until city-merge will happen.
 
 After merge 
 Merges will not have conflicts, allowing them to be fast.  Only verification against double spending is required.
@@ -210,7 +216,7 @@ No need to verify the actual location of the user VS the claimed location.  The 
 %	CHALLENGES
 %----------------------------------------------------------------------------------------
 
-\headerbox{Challenges}{name=challenges,column=2,span=1,below=background}{
+\headerbox{Challenges}{name=challenges,column=2,span=1,below=background,above=bottom}{
 
 \begin{itemize}[leftmargin=1em]
     \item \textbf{The merging process requires more computational work and bandwidth on
@@ -241,7 +247,7 @@ No need to verify the actual location of the user VS the claimed location.  The 
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
-\headerbox{References}{name=references,column=2,span=1,below=challenges,above=bottom}{
+\headerbox{References}{name=references,column=0,span=2,below=main,above=bottom}{
 
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
 \nocite{*} % Insert publications even if they are not cited in the poster

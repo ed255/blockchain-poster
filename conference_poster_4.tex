@@ -101,7 +101,7 @@ being different at each level.  The periodicity would be lower on higher level
 zones.
 
 Transactions within the lowest level zones would be applied and verified
-inmediately whereas those traversing zones would only be applied once the forks of
+immediately whereas those traversing zones would only be applied once the forks of
 the corresponding zones are merged.
 
 We suggest using 4 levels: global (0), country (-1), state (-2), city (-3).
@@ -143,16 +143,8 @@ In fact, the blockchain actually gets weaker as more nodes are added to its
 network because of the inter-node latency that logarithmically increases with
 every additional node. Moreover, requirements for the node increase, and at
 some point risk of centralization appears (only some part of nodes are able to
-process the transaction). We end up with the tradeoff between throughput and
+process the transaction). We end up with the trade off between throughput and
 decentralization, leading to low throughput in cryptocurrencies.
-
-\vspace{0.5em}
-However this is not enough to meet the needs of fiat currency.  Nowadays,
-Paypal processes 193 transactions per second and Visa 2000 (with a
-capability of 24,000). \textbf{The majority of all transactions are local transaction}
-(people do fiat currency transactions locally more often than to outside
-places). This fact pushed us to the idea of scaling blockchain by leveled
-zones.
 
 \vspace{-0.5em}
 \begin{center}
@@ -168,20 +160,24 @@ Bitcoin Cash & 60 &          &       \\
 %\captionof{table}{Table caption}
 \end{center}
 
+
+\vspace{-0.5em}
+However this is not enough to meet the needs of fiat currency.  Nowadays,
+Paypal processes 193 transactions per second and Visa 2000 (with a
+capability of 24,000). \textbf{The majority of all transactions are local transaction}
+(people do fiat currency transactions locally more often than to outside
+places). This fact pushed us to the idea of scaling blockchain by leveled
+zones.
+
 }
 
 %----------------------------------------------------------------------------------------
 %	MAIN
 %----------------------------------------------------------------------------------------
 
-\headerbox{Scaling with leveled zones}{name=main,column=0,span=2,row=1,below=introduction}{
+\headerbox{Scaling with leveled zones}{name=main,column=0,span=2,row=1,below=introduction, above=bottom}{
 
 \begin{multicols}{2}
-\vspace{1em}
-\begin{center}
-\includegraphics[width=0.8\linewidth]{placeholder}
-\captionof{figure}{Figure caption}
-\end{center}
 
 \begin{itemize}[leftmargin=1em]
     \item The global blockchain is started from the genesis block and
@@ -222,7 +218,7 @@ this is actually a sharding with a smart choice of zones.
     \item \textbf{Every 10 minutes all cities are being merged within a state}. Because
         all transactions are verified (at this moment we assume that we can
         trust other forks were not hijacked) and there is no incoming cross-city
-        transactions (all transactions are either local or "holded" output
+        transactions (all transactions are either local or "held" output
         transactions), the merge can be done without any conflicts. Immediately
         after that a new fork is created for every city and the process starts
         again.
@@ -240,10 +236,10 @@ this is actually a sharding with a smart choice of zones.
 \begin{tabular}{l l l}
 \textbf{Name} & \textbf{Level} & \textbf{periodicity}  \\
 \midrule
-Global  & (0)  & 24 hours \\
-Country & (-1) & 2 hours \\
-State &   (-2) & 10 minutes \\
 City  &   (-3) & 10 seconds \\
+State &   (-2) & 10 minutes \\
+Country & (-1) & 2 hours \\
+Global  & (0)  & 24 hours \\
 \end{tabular}
 %\captionof{table}{Table caption}
 \end{center}
@@ -262,12 +258,12 @@ All exact merging times are scheduled and unchanged.
 Transactions are verified when the forks they belong to are merged into higher
 zones (or as they are collected into blocks in the city (-3) level).
 
-\begin{center}
-\includegraphics[width=0.8\linewidth]{placeholder}
-\captionof{figure}{Figure caption}
-\end{center}
 
 \end{multicols}
+\begin{center}
+\includegraphics[width=1\linewidth]{blockchain}
+%\captionof{figure}{Figure caption}
+\end{center}
 }
 
 %----------------------------------------------------------------------------------------
@@ -307,14 +303,14 @@ zones (or as they are collected into blocks in the city (-3) level).
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
-\headerbox{References}{name=references,column=0,span=2,below=main,above=bottom}{
-
-\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
-\nocite{*} % Insert publications even if they are not cited in the poster
-\small{ % Reduce the font size in this block
-\bibliographystyle{unsrt}
-\bibliography{sample} % Use sample.bib as the bibliography file
-}}
+%\headerbox{References}{name=references,column=0,span=2,below=main,above=bottom}{
+%
+%\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+%\nocite{*} % Insert publications even if they are not cited in the poster
+%\small{ % Reduce the font size in this block
+%\bibliographystyle{unsrt}
+%\bibliography{sample} % Use sample.bib as the bibliography file
+%}}
 
 \end{poster}
 

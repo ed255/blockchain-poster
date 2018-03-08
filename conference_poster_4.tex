@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[portrait,a0paper,fontscale=0.305]{baposter} % Adjust the font scale/size here
+\documentclass[portrait,ansidpaper,fontscale=0.445]{baposter} % Adjust the font scale/size here
 
 \usepackage{graphicx} % Required for including images
 \graphicspath{{figures/}} % Directory in which figures are stored
@@ -125,18 +125,36 @@ throughput to increase significantly.
 %\headerbox{Background}{name=results2,column=1,below=objectives,bottomaligned=conclusion}{ % This block's bottom aligns with the bottom of the conclusion block
 \headerbox{Background}{name=background,column=2,span=1,row=0}{
 
-All existing blockchain protocols have a serious limitation: scalability. It is impossible to scale popular consensus systems such as Bitcoin because every single node on the network processes every transaction and maintains a copy of the entire state. The benefits of decentralization automatically imply that every node is independent and has equal processing requirements.
+    \textbf{All existing blockchain protocols have a serious limitation: scalability}. It is
+impossible to scale popular consensus systems such as Bitcoin because every
+single node on the network processes every transaction and maintains a copy of
+the entire state. The benefits of decentralization imply that every node is
+independent and has equal processing requirements.
 
 \vspace{0.5em}
-If we were talking about regular database system - the solution would be very easy. We could just add more servers - the number of servers is in direct ratio with the how system can scale. Adding more computing power may also help but in the decentralized world this means adding more computing power to every node. We cannot force every participant to do so.
+With regular database system - the solution would be very
+easy. We could just add more servers - the number of servers is in direct ratio
+with the how system can scale. \textbf{Adding more computing power may also help but in
+the decentralized world this means increasing the power of every node.}  We
+cannot force every participant to do so.
 
 \vspace{0.5em}
-In fact, the blockchain actually gets weaker as more nodes are added to its network because of the inter-node latency that logarithmically increases with every additional node. Moreover, requirements for the node increase, and at some point risk of centralization appears (only some part of nodes are able to process the transaction). We end up with the tradeoff between throughput and decentralization, leading to low throughput in cryptocurrencies.
+In fact, the blockchain actually gets weaker as more nodes are added to its
+network because of the inter-node latency that logarithmically increases with
+every additional node. Moreover, requirements for the node increase, and at
+some point risk of centralization appears (only some part of nodes are able to
+process the transaction). We end up with the tradeoff between throughput and
+decentralization, leading to low throughput in cryptocurrencies.
 
 \vspace{0.5em}
-However this is definitely not enough to meet the needs of fiat currency. Nowadays, Paypal processes 193 transactions per second and Visa does ~2000 (however Visa is capable to process 24000 transactions per second). The majority of all transactions are local transaction (people use fiat currency locally many time more often than sending it abroad / another state / another city). This fact pushed us to the idea of scaling blockchain by leveled zones.
+However this is not enough to meet the needs of fiat currency.  Nowadays,
+Paypal processes 193 transactions per second and Visa 2000 (with a
+capability of 24,000). \textbf{The majority of all transactions are local transaction}
+(people do fiat currency transactions locally more often than to outside
+places). This fact pushed us to the idea of scaling blockchain by leveled
+zones.
 
-\vspace{-1.5em}
+\vspace{-0.5em}
 \begin{center}
 \begin{tabular}{l l | l l}
 \textbf{System} & \textbf{tx/sec} & \textbf{System} & \textbf{tx/sec} \\
@@ -165,44 +183,84 @@ Bitcoin Cash & 60 &          &       \\
 \captionof{figure}{Figure caption}
 \end{center}
 
-The global blockchain is periodically being forked into fine grained local blockchains and periodically being merged into coarser more-global blockchains.
+\begin{itemize}[leftmargin=1em]
+    \item The global blockchain is started from the genesis block and
+        is \textbf{periodically forked according to the next hierarchy}: The global
+        blockchain can only be forked to a country level, so every country
+        will have its own fork. The country level will be forked as well to
+        state/region levels. So every state will have a fork from it's country
+        chain.  Finally, the state will be forked to city levels, so every
+        city will have a fork from it's state chain.
 
-\begin{enumerate}
+    \item A user assigns a wallet public key to a particular city\footnote{The
+        locality is called "city" in our system if its population exceeds 1
+        million people. Other smaller localities will be combined into one unit.}.
+        This information is stored in the global blockchain.  Users don't need
+        to prove their location to create a wallet - it influences only the
+        fork that will validate their transactions. If a user commutes between
+        zones, they can have an account for each zone and split their money
+        among the accounts.
 
-    \item User assigns a wallet public key to a particular city. This information is stored in the global blockchain. However, we don't restrict him from having multiple accounts in different cities. The locality is called "city" in our system if its population exceeds 1 million people. Other smaller localities will be combined into one fork.
-
-    \item A wallet can claim to be in a new city any time, but this information will propagate to the global (0) blockchain in the same way as transactions.
-
-    \item Every zone creates a fork from the blockchain fork of the upper level periodically.
-
-    \item Each zone only accepts transactions that originate from the same zone.
-
-    \item In-zone transactions are verified during the merge of the lower level zones (or as they are collected into blocks in the city (-3) level). [add graph here]
-
-    \item Out-zone transactions are verified when the lowest common upper level zone merges the zones it entails. [add graph here]
-
-    \item Transactions are verified when the forks they belong to are merged into higher zones (or as they are collected into blocks in the city (-3) level).
-
-\end{enumerate}
-
-4 levels (from high to low) : global (0), country (-1), state (-2), city (-3)
-
-Intervals:
-\begin{itemize}
-    \item Global (0): 24h
-    \item Country (-1): 2h
-    \item State (-2): 10 minutes
-    \item City (-3): 10 seconds
+    \item A wallet can claim to be in a new city any time; this information
+        will propagate to the global blockchain in the same way as
+        transactions.
 \end{itemize}
 
-When user 1 (from city A)  sends a cross-city transaction to user 2 (from city B) this transaction is being added to the city A fork as a special "hold" transaction. Basically, user 1 cannot double-spend this money, however user 2 will not receive them until city-merge will happen.
+\textbf{All transaction in the city will be validated almost immediately} (10 seconds)
+because one particular city level fork is processing only that city's
+transactions. The majority of fiat transactions happen within one locality - so
+that is the main goal. In this way we don't have any throughputs problems -
+this is actually a sharding with a smart choice of zones.
 
-After merge 
-Merges will not have conflicts, allowing them to be fast.  Only verification against double spending is required.
+\begin{itemize}[leftmargin=1em]
+    \item When user 1 (from city A) sends a cross-city transaction to user 2
+        (from city B) this transaction is being added to the city A fork as a
+        special "hold" transaction. Basically, user 1 cannot double-spend this
+        money, however user 2 will not verify the transaction until the proper
+        merge happens.
 
-If a user commutes between zones, they can have an account for each zone and split their money among the accounts.
+    \item \textbf{Every 10 minutes all cities are being merged within a state}. Because
+        all transactions are verified (at this moment we assume that we can
+        trust other forks were not hijacked) and there is no incoming cross-city
+        transactions (all transactions are either local or "holded" output
+        transactions), the merge can be done without any conflicts. Immediately
+        after that a new fork is created for every city and the process starts
+        again.
 
-No need to verify the actual location of the user VS the claimed location.  The claimed location only serves to decide in which local fork the account can do transactions.
+    \item \textbf{Every 2 hours all state/region forks are synced up} and merged
+        to the appropriate country forks.
+
+    \item Finally, \textbf{every 24 hours all country forks are being merged to the
+    global blockchain}.
+
+\end{itemize}
+
+\vspace{-1.5em}
+\begin{center}
+\begin{tabular}{l l l}
+\textbf{Name} & \textbf{Level} & \textbf{periodicity}  \\
+\midrule
+Global  & (0)  & 24 hours \\
+Country & (-1) & 2 hours \\
+State &   (-2) & 10 minutes \\
+City  &   (-3) & 10 seconds \\
+\end{tabular}
+%\captionof{table}{Table caption}
+\end{center}
+
+All exact merging times are scheduled and unchanged.
+
+\textbf{Each zone only accepts transactions that originate from the same zone.}
+\begin{itemize}[leftmargin=1em]
+    \item In-zone transactions are verified during the merge of the
+        lower level zones (or as they are collected into blocks in the
+        city (-3) level).
+    \item Out-zone transactions are verified when the lowest common
+        upper level zone merges the zones it entails.
+\end{itemize}
+
+Transactions are verified when the forks they belong to are merged into higher
+zones (or as they are collected into blocks in the city (-3) level).
 
 \begin{center}
 \includegraphics[width=0.8\linewidth]{placeholder}
